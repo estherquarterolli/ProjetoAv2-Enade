@@ -94,7 +94,7 @@ typedef struct
 // ler e converte a string do arquivo para o vetor de struch.
 int lerArq(char nomeArquivo[], Tcursos curso[], int *totCursos);
 // Adiciona um curso novo manualmente e passa para o arquivo original (gerar arquivo temporario)
-int addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos);
+void addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos);
 // Calcula o CPC continuo e CPC Faixa e mostra os resultados
 int gerarRel(char nomeArquivo[], Tcursos curso[], int *totCursos);
 
@@ -137,7 +137,7 @@ int main()
             
             switch (menu){
             case 1:
-                totcursos =addCurso("EnadeCursos.txt", curso, &totcursos);
+                addCurso("EnadeCursos.txt", curso, &totcursos-1);
                 break;
             case 2:
 
@@ -166,7 +166,7 @@ int main()
                 printf("\n\nAté logo");
                 break;
                 case 1: //adiconar curso
-                totcursos=addCurso("EnadeCursos.txt", curso, &totcursos);
+                addCurso("EnadeCursos.txt", curso, &totcursos);
                 break;
             
             
@@ -286,9 +286,59 @@ int lerArq(char nomeArquivo[], Tcursos curso[], int *totCursos)
 
 } // --------------------------------------------------------------------------------------
 
-int addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos) {
-    printf("Função addCurso ainda não implementada!\n");
-    return *totCursos;
+void addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos) {
+    
+    FILE *arq = fopen(nomeArquivo, "a"); // leitura do arquivo do enade
+    *totCursos = 0;
+    if (!arq)
+    { // erro de abertura
+        printf("erro na abertura!");
+    }
+    if (*totCursos==MAX_CURSOS)
+    {
+        printf("o maximo de cursos atingidos!")
+    }
+    else
+    {
+        /* code */
+    }
+    
+    while (*totCursos<=MAX_CURSOS)
+    {
+        
+    printf("Digite o código do curso: ");
+    scanf("%d", &curso[*totCursos+1].codigo);
+
+    printf("Nota do Enade: ");
+    scanf("%f", &curso[*totCursos+1].nota_enade);
+
+    printf("IDD: ");
+    scanf("%f", &curso[*totCursos+1].idd);
+
+    printf("Percentual de doutores: ");
+    scanf("%f", &curso[*totCursos+1].doutores);
+
+    printf("Percentual de mestres: ");
+    scanf("%f", &curso[*totCursos+1].mestres);
+
+    printf("Regime de trabalho: ");
+    scanf("%f", &curso[*totCursos+1].regime_trabalho);
+
+    printf("Organização didática pedagógica: ");
+    scanf("%f", &curso[*totCursos+1].organizacao_didatica);
+
+    printf("Infraestrutura: ");
+    scanf("%f", &curso[*totCursos+1].infraestrutura);
+
+    printf("Oportunidades acadêmicas/profissionais: ");
+    scanf("%f", &curso[*totCursos+1].oportunidades);
+
+    printf("Número de alunos: ");
+    scanf("%d", &curso[*totCursos+1].num_alunos);
+
+    }
+    
+
 }
 
 int gerarRel(char nomeArquivo[], Tcursos curso[], int *totCursos) {
