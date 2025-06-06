@@ -110,11 +110,11 @@ int main()
 {
 
     // declaração de variáveis
-    int resultado, menu = 0, totcursos = 0, count = 0;
+    int  menu = 0, totcursos = 0, count = 0;
     Tcursos curso[MAX_CURSOS];
 
     // lendo o arquivo
-    resultado = lerArq("EnadeCursos.txt", curso, &totcursos);
+    totcursos = lerArq("EnadeCursos.txt", curso, &totcursos);
 
     // testando se o vetor foi preenchido corretamente
     while (count < totcursos)
@@ -123,8 +123,8 @@ int main()
         printarCurso(curso[count]);
         count++;
     }
-    // exibindo o resultado
-    switch (resultado)
+    // exitotcursos
+    switch (totcursos)
     {
     case -1:
         printf("\n\nError!\n Arquivo não encontrado.");
@@ -169,7 +169,7 @@ int main()
                 break; 
                 case 1: //adiconar curso
                 totcursos=addCurso("EnadeCursos.txt", curso, &totcursos);
-                resultado=lerArq("EnadeCursos.txt", curso, &totcursos);
+               totcursos=lerArq("EnadeCursos.txt", curso, &totcursos);
 
                 break;
                 
@@ -227,7 +227,7 @@ int lerArq(char nomeArquivo[], Tcursos curso[], int *totCursos)
     *totCursos = 0;
     if (!arq)
     { // erro de abertura
-        return -1;
+        return 0;
     }
 
     // lendo os dados do arquivo e promovendo
@@ -285,19 +285,9 @@ int lerArq(char nomeArquivo[], Tcursos curso[], int *totCursos)
                 campo++;
             }
         }
-
-        // Último campo (num_alunos), após o último '|'
-        temp[j] = '\0';
-        curso[i].num_alunos = atoi(temp);
-
-        i++; // próximo curso
-        *totCursos = i;
     }
-
-    fclose(arq);
-    return *totCursos;
-
-} // --------------------------------------------------------------------------------------
+    return i;
+}
 
 int addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos) {
     if (*totCursos>=MAX_CURSOS){
@@ -312,10 +302,15 @@ int addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos) {
             return 0;
     }
     
+    if (*totCursos<0)
+    {
+         fprintf(arq,"\n"); //se o arquivo não estiver vazio adiciona um espaço para a leitura
+    }
+    
 
     printf("Informe o código do curso: ");
     scanf("%d", &curso[temp].codigo);
-    fprintf(arq,"\n%d|",curso[temp].codigo);
+    fprintf(arq,"%d|",curso[temp].codigo);
 
     printf("Informe a nota do ENADE: ");
     scanf("%f", &curso[temp].nota_enade);
@@ -352,7 +347,6 @@ int addCurso(char nomeArquivo[], Tcursos curso[], int *totCursos) {
     printf("Informe o número de alunos matriculados: ");
     scanf("%d", &curso[temp].num_alunos);
     fprintf(arq,"%i",curso[temp].num_alunos);
-
 
 
     fclose(arq);
